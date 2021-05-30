@@ -12,7 +12,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: '/hotComments',
+        name: 'hotComments',
+        component: () => import('@/views/hotComments.vue')
+      }
+    ]
   },
   {
     path: '/vuex',
