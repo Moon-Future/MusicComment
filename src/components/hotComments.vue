@@ -2,7 +2,7 @@
   <div class="hot-comment">
     <div>
       <div class="title">热评榜单</div>
-      <div class="desc">发现好音乐</div>
+      <div class="desc">每段评论，都是一段故事</div>
     </div>
     <div class="comments">
       <div class="item" v-for="item in hotComments" :key="item.id">
@@ -186,7 +186,7 @@ export default defineComponent({
   setup() {
     const getHotComments = async () => {
       const result = await axios.post('http://127.0.0.1:5555/api/music/getHotComments')
-      return result.data.data
+      return handleData(result.data.data)
     }
 
     const handleData = (data: any[]) => {
@@ -202,8 +202,8 @@ export default defineComponent({
     }
   },
   async created() {
-    // this.hotComments = await this.getHotComments()
-    this.hotComments = this.handleData(this.hotComments)
+    this.hotComments = await this.getHotComments()
+    // this.hotComments = this.handleData(this.hotComments)
   },
 })
 </script>
