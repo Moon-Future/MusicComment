@@ -1,6 +1,9 @@
 <template>
-  <div class="container hot-comment">
-    <div>热评榜单</div>
+  <div class="hot-comment">
+    <div>
+      <div class="title">热评榜单</div>
+      <div class="desc">发现好音乐</div>
+    </div>
     <div class="comments">
       <div class="item" v-for="item in hotComments" :key="item.id">
         <img class="avatar" :src="item.avatar" alt="">
@@ -11,11 +14,11 @@
           </div>
           <div class="info">
             <span class="time">{{ item.time }}</span>
-            <div class="from">
-              <a class="song" :href="`https://music.163.com/#/song?id=${item.songId}`" target="_blank">{{ item.songName }} - {{ item.artistName }}</a>
-              <div>赞{{ item.likedCount }}</div>
-            </div>
+            <div><Icon iconfont="icon-weibiaoti1" :css="{fontSize:'20px', marginRight:'2px'}" />{{ item.likedCount }}</div>
           </div>
+          <div class="song">
+            <a :href="`https://music.163.com/#/song?id=${item.songId}`" target="_blank">{{ item.songName }} - {{ item.artistName }}</a>  
+          </div>      
         </div>
       </div>
     </div>
@@ -23,10 +26,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent } from 'vue'
+import Icon from '@/components/Icon.vue'
 import axios from 'axios'
+import { formatTime } from '../static/js/utils.js'
 
 export default defineComponent({
+  name: 'hotComments',
+  components: { Icon },
   data() {
     return {
       hotComments: [
@@ -182,29 +189,49 @@ export default defineComponent({
       return result.data.data
     }
 
+    const handleData = (data: any[]) => {
+      data.forEach((item: any) => {
+        item.time = formatTime(item.time, 'yyyy-MM-dd hh:mm')
+      })
+      return data
+    }
+
     return {
-      getHotComments
+      getHotComments,
+      handleData
     }
   },
   async created() {
-    this.hotComments = await this.getHotComments()
-    // console.log(this.hotComments)
-    // this.hotComments = []
-  }
+    // this.hotComments = await this.getHotComments()
+    this.hotComments = this.handleData(this.hotComments)
+  },
 })
 </script>
 
-<style scoped>
-.comments {
+<style lang="less" scoped>
+.hot-comment {
   padding: 0 15px;
+}
+.title {
+  height: 30px;
+  line-height: 30px;
+  text-align: left;
+  font-weight: bold;
+  color: #0c73c2;
+  margin-top: 15px;
+}
+.desc {
+  text-align: left;
+  font-size: 12px;
+  color: #999;
 }
 .item {
   display: flex;
   font-size: 14px;
   padding: 15px 0;
-}
-.item:not(:last-child) {
-  border-bottom: 1px dotted #ccc;
+  &:not(:last-child) {
+    border-bottom: 1px dotted #ccc;
+  }
 }
 .avatar {
   width: 50px;
@@ -216,26 +243,34 @@ export default defineComponent({
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-}
-.text {
-  text-align: left;
-}
-.nickname {
-  color: #0c73c2;
-}
-.content {
-  font-size: 14px;
-}
-.info {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-.from {
-  display: flex;
-}
-.song {
-  margin-right: 10px;
-  font-weight: bold;
+  .text {
+    text-align: left;
+    .nickname {
+      color: #0c73c2;
+    }
+    .content {
+      letter-spacing: 1px;
+    }
+  }
+  .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    .time {
+      color: #999;
+      text-align: right;
+    }
+    .from {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  .song {
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+  }
 }
 </style>
