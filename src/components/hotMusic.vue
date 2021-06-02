@@ -6,8 +6,17 @@
     </div>
     <div>
       <div class="music-item" v-for="(item, index) in hotComments" :key="item.uuid">
-        <div>{{ index + 1 }}. <a :href="`https://music.163.com/#/song?id=${item.id}`" target="_blank">{{ item.name }} - {{ item.artistName }}</a></div>
-        <div><Icon iconfont="icon-weibiaoti1" :css="{fontSize:'20px', marginRight:'2px'}" />{{ item.commentCount }}</div>
+        <div>{{ index + 1 }}. </div>
+        <div class="music-wrap">
+          <div class="music-info">
+            <img class="avatar" :src="`${item.avatar}?param=50y50`" alt="" srcset="">
+            <div class="music-artist">
+              <a :href="`https://music.163.com/#/song?id=${item.id}`" target="_blank">{{ item.name }}</a>
+              <span>{{ item.artistName }}</span>
+            </div>
+          </div>
+          <div class="music-liked"><Icon iconfont="icon-weibiaoti1" :css="{fontSize:'20px', marginRight:'2px'}" />{{ item.commentCount }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -62,7 +71,39 @@ export default defineComponent({
 .music-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px 0;
   font-size: 14px;
+  .music-wrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    .music-info {
+      display: flex;
+      width: 100%;
+      .avatar {
+        width: 50px;
+        height: 50px;
+        margin: 0 10px;
+      }
+      .music-artist {
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+        text-align: left;
+        a {
+          font-weight: bold;
+        }
+        span {
+          color: #999;
+        }
+      }
+    }
+    .music-liked {
+      display: flex;
+      align-items: center;
+    }
+  }
+  
 }
 </style>
