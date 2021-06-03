@@ -51,7 +51,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .hot-music {
   padding: 0 15px;
 }

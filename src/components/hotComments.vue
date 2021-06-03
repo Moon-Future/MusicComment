@@ -4,36 +4,19 @@
       <div class="title">热评榜单</div>
       <div class="desc">每段评论，都是一段故事</div>
     </div>
-    <div class="comments">
-      <div class="item" v-for="item in hotComments" :key="item.id">
-        <img class="avatar" :src="item.avatar" alt="">
-        <div class="wrap">
-          <div class="text">
-            <span class="nickname">{{ item.nickname }}</span>
-            <span class="content">：{{ item.content }}</span>
-          </div>
-          <div class="info">
-            <span class="time">{{ item.time }}</span>
-            <div><Icon iconfont="icon-weibiaoti1" :css="{fontSize:'20px', marginRight:'2px'}" />{{ item.likedCount }}</div>
-          </div>
-          <div class="song">
-            <a :href="`https://music.163.com/#/song?id=${item.songId}`" target="_blank">{{ item.songName }} - {{ item.artistName }}</a>  
-          </div>      
-        </div>
-      </div>
-    </div>
+    <Comments :comments="hotComments" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Icon from '@/components/Icon.vue'
+import Comments from '@/components/Comments.vue'
 import axios from 'axios'
 import { formatTime } from '../static/js/utils.js'
 
 export default defineComponent({
   name: 'hotComments',
-  components: { Icon },
+  components: { Comments },
   data() {
     return {
       hotComments: [
@@ -78,7 +61,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .hot-comment {
   padding: 0 15px;
 }

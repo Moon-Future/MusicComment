@@ -17,7 +17,7 @@ export default defineComponent({
 </script>
 
 <style>
-@import url('./static/less/reset.less');
+@import url('./static/scss/reset.scss');
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

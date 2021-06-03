@@ -5,24 +5,23 @@
   </div>
   <!-- <router-view></router-view> -->
   <div class="container home-wrap">
-    <hotComments class="home-left" />
-    <hotMusic class="home-right" />
+    <HotComments class="home-left" />
+    <HotMusic class="home-right" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import hotComments from '../components/hotComments.vue'
-import hotMusic from '../components/hotMusic.vue'
-import axios from 'axios'
+import HotComments from '@/components/HotComments.vue'
+import HotMusic from '@/components/HotMusic.vue'
 
 export default defineComponent({
-  components: { hotComments, hotMusic },
+  components: { HotComments, HotMusic },
   setup() {},
 })
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .banner {
   width: 100%;
   height: 40vh;
