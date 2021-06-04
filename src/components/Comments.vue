@@ -12,7 +12,8 @@
           <div><Icon iconfont="icon-weibiaoti1" :css="{fontSize:'20px', marginRight:'2px'}" />{{ item.likedCount }}</div>
         </div>
         <div class="song">
-          <a :href="`https://music.163.com/#/song?id=${item.songId}`" target="_blank">{{ item.songName }} - {{ item.artistName }}</a>  
+          <!-- <a :href="`https://music.163.com/#/song?id=${item.songId}`" target="_blank">{{ item.songName }} - {{ item.artistName }}</a>   -->
+          <router-link :to="{ path: 'music', query: { songId: item.songId } }">{{ item.songName }} - {{ item.artistName }}</router-link>
         </div>      
       </div>
     </div>

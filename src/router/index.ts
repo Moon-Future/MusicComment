@@ -6,7 +6,7 @@ import {
 } from 'vue-router'
 import Home from '@/views/home.vue'
 import Vuex from '@/views/vuex.vue'
-import Music from '@/views/music.vue'
+// import Music from '@/views/music.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/music',
     name: 'Music',
-    component: Music
+    component: () => import('@/views/music.vue')
   }
 ]
 
