@@ -4,17 +4,19 @@
       <img class="avatar" :src="item.avatar" alt="">
       <div class="wrap">
         <div class="text">
-          <span class="nickname">{{ item.nickname }}</span>
-          <span class="content">：{{ item.content }}</span>
+          <span class="nickname">{{ item.nickname }}</span>：
+          <template v-for="(comment, i) in item.content" :key="i">
+            <span class="content" :class="{ block: i !== 0 }">{{ comment }}</span>
+          </template>
         </div>
         <div class="info">
           <span class="time">{{ item.time }}</span>
           <div><Icon iconfont="icon-weibiaoti1" :css="{fontSize:'20px', marginRight:'2px'}" />{{ item.likedCount }}</div>
         </div>
         <div class="song">
-          <!-- <a :href="`https://music.163.com/#/song?id=${item.songId}`" target="_blank">{{ item.songName }} - {{ item.artistName }}</a>   -->
-          <router-link :to="{ path: 'music', query: { songId: item.songId } }">{{ item.songName }} - {{ item.artistName }}</router-link>
-        </div>      
+          <a :href="`https://music.163.com/#/song?id=${item.songId}`" target="_blank">{{ item.songName }} - {{ item.artistName }}</a>
+          <!-- <router-link :to="{ path: 'music', query: { songId: item.songId } }">{{ item.songName }} - {{ item.artistName }}</router-link> -->
+        </div>
       </div>
     </div>
   </div>
@@ -65,6 +67,9 @@ export default defineComponent({
     }
     .content {
       letter-spacing: 1px;
+      &.block {
+        display: block;
+      }
     }
   }
   .info {

@@ -10,12 +10,12 @@ export const URL = {
 }
 
 const API = {
-  getHotComments(data) {
-    return axios.post(HOTS + URL.getHotComments, data)
+  getHotComments(pageNo, pageSize) {
+    return axios.post(HOTS + URL.getHotComments, { pageNo, pageSize })
   },
 
-  getHotMusic(data) {
-    return axios.post(HOTS + URL.getHotMusic, data)
+  getHotMusic(pageNo, pageSize) {
+    return axios.post(HOTS + URL.getHotMusic, { pageNo, pageSize })
   },
 
   getLyric(songId) {

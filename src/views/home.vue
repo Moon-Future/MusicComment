@@ -2,26 +2,31 @@
   <div class="top">
     <img class="banner" src="https://static-1255423800.cos.ap-guangzhou.myqcloud.com/image/banner/banner-11.jpg" alt="" />
     <p class="text">初闻不知曲中意，再闻已是曲中人。</p>
+    <el-input
+      placeholder="请输入内容"
+      v-model="input3"
+      class="input-search"
+    >
+      <template #append>
+        <el-button icon="el-icon-search"></el-button>
+      </template>
+    </el-input>
   </div>
-  <!-- <router-view></router-view> -->
-  <div class="container home-wrap">
-    <HotComments class="home-left" />
-    <HotMusic class="home-right" />
-  </div>
+  <router-view class="container"></router-view>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HotComments from '@/components/HotComments.vue'
-import HotMusic from '@/components/HotMusic.vue'
 
 export default defineComponent({
-  components: { HotComments, HotMusic },
   setup() {},
 })
 </script>
 
 <style lang="scss" scoped>
+.top {
+  position: relative;
+}
 .banner {
   width: 100%;
   height: 40vh;
@@ -29,18 +34,16 @@ export default defineComponent({
 }
 .text {
   position: absolute;
-  top: 20vh;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
 }
-.home-wrap {
-  display: flex;
-  .home-left {
-    width: 60%;
-  }
-  .home-right {
-    width: 40%;
-  }
+.input-search {
+  position: absolute;
+  width: 60%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

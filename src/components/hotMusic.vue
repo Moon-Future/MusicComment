@@ -4,9 +4,9 @@
       <div class="title">热评音乐</div>
       <div class="desc">发现好音乐</div>
     </div>
-    <div>
-      <div class="music-item" v-for="(item, index) in hotComments" :key="item.uuid">
-        <div>{{ index + 1 }}. </div>
+    <div v-loading="loading">
+      <div class="music-item" v-for="(item, index) in hotMusic" :key="item.uuid">
+        <div>{{ (pageNo - 1) * pageSize + index + 1 }}. </div>
         <div class="music-wrap">
           <div class="music-info">
             <img class="avatar" :src="`${item.avatar}?param=50y50`" alt="" srcset="">
@@ -18,35 +18,65 @@
           <div class="music-liked"><Icon iconfont="icon-weibiaoti1" :css="{fontSize:'20px', marginRight:'2px'}" />{{ item.commentCount }}</div>
         </div>
       </div>
+
+      <el-pagination
+        background
+        class="page-warp"
+        layout="prev, pager, next"
+        :current-page="pageNo"
+        :page-size="pageSize"
+        :total="total"
+        @current-change="changePage">
+      </el-pagination>
+      <el-input-number v-model="pageNo" @change="changePage" :min="1" :max="pageCount"></el-input-number>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, warn } from 'vue'
+<script>
+import { defineComponent } from 'vue'
 import Icon from '@/components/Icon.vue'
-import axios from 'axios'
+import API from '@/static/js/api.js'
 
 export default defineComponent({
   name: 'hotMusic',
   components: { Icon },
   data() {
     return {
-      hotComments: []
+      hotMusic: [],
+      pageNo: 1,
+      pageSize: 20,
+      pageCount: 0,
+      total: 0,
+      loading: false
     }
   },
   setup() {
-    const getHotComments = async () => {
-      const result = await axios.post('http://127.0.0.1:5555/api/music/getHotMusic')
-      return result.data.data
+    const getHotMusic = async (pageNo, pageSize = 20) => {
+      const result = await API.getHotMusic(pageNo, pageSize)
+      return { data: result.data.data, total: result.data.total }
     }
 
     return {
-      getHotComments
+      getHotMusic
     }
   },
   async created() {
-    this.hotComments = await this.getHotComments()
+    this.getPageData()
+  },
+  methods: {
+    async getPageData() {
+      this.loading = true
+      const musicData = await this.getHotMusic(this.pageNo, this.pageSize)
+      this.hotMusic = musicData.data
+      this.total = musicData.total
+      this.pageCount = Math.ceil(this.total / this.pageSize)
+      this.loading = false
+    },
+    changePage(pageNo) {
+      this.pageNo = pageNo
+      this.getPageData(pageNo)
+    }
   }
 })
 </script>
@@ -104,6 +134,8 @@ export default defineComponent({
       align-items: center;
     }
   }
-  
+}
+.page-warp {
+  margin-bottom: 10px;
 }
 </style>

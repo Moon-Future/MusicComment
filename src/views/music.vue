@@ -1,9 +1,18 @@
 <template>
-  <div class="container">
-    
-    <div class="lyric">
-      <p class="lyric-item" v-for="(item, index) in songInfo.lyric" :key="index">{{ item }}</p>
+  <div class="container music-info">
+    <div class="info">
+      <img class="avatar" :src="`${songInfo.avatar}?param=200y200`" alt="" srcset="">
+      <div>
+        <div class="artist">
+          <a :href="`https://music.163.com/#/song?id=${songInfo.id}`" target="_blank">{{ songInfo.name }}</a>
+          <span>{{ songInfo.artistName }}</span>
+        </div>
+        <div class="lyric">
+          <p class="lyric-item" v-for="(item, index) in songInfo.lyric" :key="index">{{ item }}</p>
+        </div>
+      </div>
     </div>
+    
     <div class="comments-wrap">
       <Comments />
     </div>
@@ -52,6 +61,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.music-info {
+  padding: 20px;
+}
+.info {
+  display: flex;
+}
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-right: 30px;
+}
 .lyric {
   text-align: left;
   .lyric-item {
